@@ -1,25 +1,39 @@
 import { useContext, useEffect, useState } from 'react';
-import { Container, Dropdown, DropdownButton } from 'react-bootstrap';
-import { BreedContextType, ISelectedBreed } from 'src/@types/AppTypes';
+import {
+  Container,
+  Form,
+  FormGroup,
+  FormLabel,
+  FormSelect,
+} from 'react-bootstrap';
+import { AppContextType, ISelectedBreed } from 'src/@types/AppTypes';
 import { fetchCatBreeds } from 'src/apis/cats';
-import CatsList from 'src/components/CatsList/CatsList';
+import CatsList from 'src/views/Home/CatsList/CatsList';
 import AppContext from 'src/contexts/AppContext';
 
 const Home = () => {
   const [catBreeds, setCatBreeds] = useState<ISelectedBreed[]>([]);
 
-  const { selectedBreed, setSelectedBreed } = useContext(
+  const { selectedBreed, setSelectedBreed, setSearch } = useContext(
     AppContext,
-  ) as BreedContextType;
+  ) as AppContextType;
 
-  const handleSelectBreed = (breed: ISelectedBreed) => {
-    setSelectedBreed({
-      id: breed.id,
-      name: breed.name,
-      origin: breed.origin,
-      temperament: breed.temperament,
-      description: breed.description,
-    });
+  const handleSelectBreed = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const findBreed = catBreeds.find(cat => cat.id === event.target.value);
+
+    if (findBreed) {
+      setSelectedBreed({
+        id: findBreed.id,
+        name: findBreed.name,
+        origin: findBreed.origin,
+        temperament: findBreed.temperament,
+        description: findBreed.description,
+      });
+      setSearch({
+        page: 1,
+        id: findBreed.id,
+      });
+    }
   };
 
   useEffect(() => {
@@ -35,28 +49,22 @@ const Home = () => {
   return (
     <Container>
       <h1>Cat Browser</h1>
-      <h3>Breeds</h3>
-      <DropdownButton
-        title={selectedBreed.name === '' ? 'Select Breed' : selectedBreed.name}
-      >
-        {catBreeds.map(breed => {
-          const breedBody = {
-            id: breed.id,
-            name: breed.name,
-            origin: breed.origin,
-            temperament: breed.temperament,
-            description: breed.description,
-          };
-          return (
-            <Dropdown.Item
-              key={breed.id}
-              onClick={() => handleSelectBreed(breedBody)}
-            >
-              {breed.name}
-            </Dropdown.Item>
-          );
-        })}
-      </DropdownButton>
+      <Form>
+        <FormGroup>
+          <FormLabel>Breed</FormLabel>
+          <FormSelect value={selectedBreed.id} onChange={handleSelectBreed}>
+            <option key="placeholder" hidden value="">
+              Select breed
+            </option>
+            {catBreeds.map((breed, index) => (
+              <option key={index} value={breed.id}>
+                {breed.name}
+              </option>
+            ))}
+          </FormSelect>
+        </FormGroup>
+      </Form>
+
       <CatsList />
     </Container>
   );
