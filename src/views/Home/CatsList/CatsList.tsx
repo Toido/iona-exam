@@ -33,9 +33,8 @@ const CatsListContent = ({ catList }: { catList: ICatImages[] }) => {
 };
 
 const CatsList = () => {
-  const { selectedBreed } = useContext(AppContext);
+  const { selectedBreed, search, setSearch } = useContext(AppContext);
   const [catList, setCatList] = useState<ICatImages[]>([]);
-  const [page, setPage] = useState(1);
   const [hasMoreRes, setHasMoreRes] = useState(false);
   const [uniqueIds, setUniqueIds] = useState<Set<string>>(new Set());
   const uniqueIdRef = useRef<Set<string>>(uniqueIds);
@@ -47,7 +46,9 @@ const CatsList = () => {
   useEffect(() => {
     // Fetch images of selected breed
     const fetchImages = async () => {
-      const res = await fetchCatImages(page, selectedBreed.id);
+      console.log('here');
+
+      const res = await fetchCatImages(search.page, selectedBreed.id);
 
       // Filter duplicate id
       const uniqueRes = res.data.filter((res: ICatImages) => {
@@ -81,7 +82,15 @@ const CatsList = () => {
     if (selectedBreed.id !== '') {
       fetchImages();
     }
-  }, [page, selectedBreed]);
+  }, [search, selectedBreed]);
+
+  useEffect(() => {
+    return () => {
+      setCatList([]);
+      setUniqueIds(new Set());
+      setHasMoreRes(false);
+    };
+  }, [selectedBreed]);
 
   useEffect(() => {
     setHasMoreRes(true);
@@ -95,7 +104,7 @@ const CatsList = () => {
     return (
       <Button
         onClick={() => {
-          setPage(page + 1);
+          setSearch({ page: search.page + 1 });
         }}
       >
         Load more
