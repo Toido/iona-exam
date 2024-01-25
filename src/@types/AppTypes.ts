@@ -6,6 +6,11 @@ export interface ISelectedBreed {
   description: string;
 }
 
+export interface ISearch {
+  id?: string;
+  page: number;
+}
+
 export interface ICatImages {
   breeds: ISelectedBreed;
   id: string;
@@ -14,7 +19,9 @@ export interface ICatImages {
   width: number;
 }
 
-export type BreedContextType = {
+export type AppContextType = {
   selectedBreed: ISelectedBreed;
   setSelectedBreed: (breed: ISelectedBreed) => void;
+  search: ISearch;
+  setSearch: (search: ISearch) => void;
 };

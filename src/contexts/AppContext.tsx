@@ -1,7 +1,7 @@
 import { createContext } from 'react';
-import { BreedContextType } from 'src/@types/AppTypes';
+import { AppContextType } from 'src/@types/AppTypes';
 
-const AppContext = createContext<BreedContextType>({
+const AppContext = createContext<AppContextType>({
   selectedBreed: {
     id: '',
     name: '',
@@ -10,6 +10,11 @@ const AppContext = createContext<BreedContextType>({
     description: '',
   },
   setSelectedBreed: () => {},
+  search: {
+    id: '',
+    page: 1,
+  },
+  setSearch: () => {},
 });
 
 export default AppContext;
