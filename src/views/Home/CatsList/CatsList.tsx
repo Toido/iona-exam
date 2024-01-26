@@ -1,44 +1,20 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import { Button, Col, Row } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { AppContextType, ICatDetails } from 'src/@types/AppTypes';
 import { fetchCatImages } from 'src/apis/cats';
-import ImageCard from 'src/components/ImageCard/ImageCard';
 import AppContext from 'src/contexts/AppContext';
 import { StyledButton } from './styles';
-
-const CatsListContent = ({ catList }: { catList: ICatDetails[] }) => {
-  const navigate = useNavigate();
-
-  const handleViewDetail = (id: string) => {
-    navigate(`/${id}`);
-  };
-
-  const renderButton = (id: string) => {
-    return <Button onClick={() => handleViewDetail(id)}>View Details</Button>;
-  };
-
-  return (
-    <Row>
-      {catList.map((cat, index) => {
-        return (
-          <Col key={index} xs={12} sm={6} md={4} lg={3}>
-            <ImageCard imageUrl={cat.url} body={renderButton(cat.id)} />
-          </Col>
-        );
-      })}
-    </Row>
-  );
-};
+import CatsListContent from './component/CatsListContent';
 
 const CatsList = () => {
-  const { selectedBreed, search, setSearch } = useContext(
-    AppContext,
-  ) as AppContextType;
+  const { selectedBreed } = useContext(AppContext) as AppContextType;
   const [catList, setCatList] = useState<ICatDetails[]>([]);
   const [hasMoreRes, setHasMoreRes] = useState(false);
   const [uniqueIds, setUniqueIds] = useState<Set<string>>(new Set());
   const uniqueIdRef = useRef<Set<string>>(uniqueIds);
+  const [searchParams] = useSearchParams();
+  const breedParam = searchParams.get('breed');
+  const [page, setPage] = useState(1);
 
   useEffect(() => {
     uniqueIdRef.current = uniqueIds;
@@ -47,12 +23,15 @@ const CatsList = () => {
   useEffect(() => {
     // Fetch images of selected breed
     const fetchImages = async () => {
-      const res = await fetchCatImages(search.page, selectedBreed.id);
+      const breedId = breedParam ?? selectedBreed.id;
+      const res = await fetchCatImages(page, breedId);
 
       // Filter duplicate id
       const uniqueRes = res.data.filter((res: ICatDetails) => {
         return !uniqueIdRef.current.has(res.id);
       });
+
+      console.log({ catList, uniqueRes, uniqueIdRef });
 
       if (uniqueIdRef.current.size === 0) {
         setCatList(prevData => [...prevData, ...res.data]);
@@ -74,16 +53,14 @@ const CatsList = () => {
         );
       } else {
         // No new unique IDs, hide the load more button
-        console.log('no more');
-
         setHasMoreRes(false);
       }
     };
 
-    if (selectedBreed.id !== '') {
+    if (selectedBreed.id !== '' || breedParam !== '') {
       fetchImages();
     }
-  }, [search, selectedBreed]);
+  }, [page, selectedBreed, breedParam]);
 
   useEffect(() => {
     return () => {
@@ -91,7 +68,7 @@ const CatsList = () => {
       setUniqueIds(new Set());
       setHasMoreRes(false);
     };
-  }, [selectedBreed]);
+  }, [selectedBreed, breedParam]);
 
   useEffect(() => {
     setHasMoreRes(true);
@@ -106,7 +83,7 @@ const CatsList = () => {
       <StyledButton
         variant="success"
         onClick={() => {
-          setSearch({ page: search.page + 1 });
+          setPage(page + 1);
         }}
       >
         Load more
@@ -114,9 +91,6 @@ const CatsList = () => {
     );
   };
 
-  if (selectedBreed.id === '') {
-    return <h4>No cats available</h4>;
-  }
   return (
     <>
       <CatsListContent catList={catList} />
