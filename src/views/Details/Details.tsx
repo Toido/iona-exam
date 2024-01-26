@@ -4,6 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { ISelectedBreed } from 'src/@types/AppTypes';
 import { fetchSelectedCatImage } from 'src/apis/cats';
 import ImageCard from 'src/components/ImageCard/ImageCard';
+import Loading from 'src/components/Loading/Loading';
 import AppContext from 'src/contexts/AppContext';
 import { StyledContainer } from 'src/styles';
 
@@ -20,6 +21,7 @@ const Details = () => {
     temperament: '',
     description: '',
   });
+  const [isLoading, setIsLoading] = useState(false);
   const { setSelectedBreed, selectedBreed } = useContext(AppContext);
   const navigate = useNavigate();
 
@@ -27,21 +29,26 @@ const Details = () => {
 
   const fetchCatDetails = useMemo(
     () => async () => {
-      if (catId) {
-        const res = await fetchSelectedCatImage(catId);
-        const resData = res.data;
-        const breedsBody: ISelectedBreed = {
-          id: resData.breeds[0].id,
-          name: resData.breeds[0].name,
-          origin: resData.breeds[0].origin,
-          temperament: resData.breeds[0].temperament,
-          description: resData.breeds[0].description,
-        };
-        setImageUrl(resData.url);
-        setSelectedBreed(resData.breeds[0].id);
-        setCatDetails(breedsBody);
-      } else {
-        // display error message
+      try {
+        if (catId) {
+          setIsLoading(true);
+          const res = await fetchSelectedCatImage(catId);
+          const resData = res.data;
+          const breedsBody: ISelectedBreed = {
+            id: resData.breeds[0].id,
+            name: resData.breeds[0].name,
+            origin: resData.breeds[0].origin,
+            temperament: resData.breeds[0].temperament,
+            description: resData.breeds[0].description,
+          };
+          setImageUrl(resData.url);
+          setSelectedBreed(resData.breeds[0].id);
+          setCatDetails(breedsBody);
+          setIsLoading(false);
+        }
+      } catch (e) {
+        console.log({ e });
+        setIsLoading(false);
       }
     },
     [catId, setSelectedBreed],
@@ -69,6 +76,14 @@ const Details = () => {
       </>
     );
   };
+
+  if (isLoading) {
+    return (
+      <StyledContainer>
+        <Loading text="Loading..." />
+      </StyledContainer>
+    );
+  }
 
   return (
     <StyledContainer>
