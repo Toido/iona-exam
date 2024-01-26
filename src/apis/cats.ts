@@ -27,3 +27,8 @@ export const fetchCatImages = async (page: number, breedId: string) => {
   );
   return res;
 };
+
+export const fetchSelectedCatImage = async (imageId: string) => {
+  const res = await api.get(`/images/${imageId}`);
+  return res;
+};
