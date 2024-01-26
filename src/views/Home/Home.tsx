@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import {
+  Col,
   Container,
-  Form,
   FormGroup,
   FormLabel,
   FormSelect,
@@ -10,6 +10,8 @@ import { AppContextType, ISelectedBreed } from 'src/@types/AppTypes';
 import { fetchCatBreeds } from 'src/apis/cats';
 import CatsList from 'src/views/Home/CatsList/CatsList';
 import AppContext from 'src/contexts/AppContext';
+import { StyledRow } from './styles';
+import { StyledContainer } from 'src/styles';
 
 const Home = () => {
   const [catBreeds, setCatBreeds] = useState<ISelectedBreed[]>([]);
@@ -47,26 +49,28 @@ const Home = () => {
   }, []);
 
   return (
-    <Container>
+    <StyledContainer>
       <h1>Cat Browser</h1>
-      <Form>
+      <StyledRow>
         <FormGroup>
           <FormLabel>Breed</FormLabel>
-          <FormSelect value={selectedBreed.id} onChange={handleSelectBreed}>
-            <option key="placeholder" hidden value="">
-              Select breed
-            </option>
-            {catBreeds.map((breed, index) => (
-              <option key={index} value={breed.id}>
-                {breed.name}
+          <Col md={3} sm={6} xs={12}>
+            <FormSelect value={selectedBreed.id} onChange={handleSelectBreed}>
+              <option key="placeholder" hidden value="">
+                Select breed
               </option>
-            ))}
-          </FormSelect>
+              {catBreeds.map((breed, index) => (
+                <option key={index} value={breed.id}>
+                  {breed.name}
+                </option>
+              ))}
+            </FormSelect>
+          </Col>
         </FormGroup>
-      </Form>
+      </StyledRow>
 
       <CatsList />
-    </Container>
+    </StyledContainer>
   );
 };
 
