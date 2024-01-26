@@ -6,8 +6,10 @@ import AppContext from 'src/contexts/AppContext';
 import { StyledButton } from './styles';
 import CatsListContent from './component/CatsListContent';
 import Loading from 'src/components/Loading/Loading';
+import AlertContext from 'src/contexts/AlertContext';
 
 const CatsList = () => {
+  const { setAlert } = useContext(AlertContext);
   const { selectedBreed, setSelectedBreed } = useContext(
     AppContext,
   ) as AppContextType;
@@ -67,6 +69,12 @@ const CatsList = () => {
       } catch (e) {
         console.log({ e });
         setIsLoading(false);
+        setAlert({
+          bodyMessage:
+            'Apologies but we could not load new cats for you at this time! Miau!',
+          show: true,
+          variant: 'warning',
+        });
       }
     };
 

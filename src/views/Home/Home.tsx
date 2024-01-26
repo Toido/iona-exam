@@ -6,9 +6,13 @@ import CatsList from 'src/views/Home/CatsList/CatsList';
 import AppContext from 'src/contexts/AppContext';
 import { StyledRow } from './styles';
 import { StyledContainer } from 'src/styles';
+import AlertContext from 'src/contexts/AlertContext';
+import { AlertContextType } from 'src/@types/AlertTypes';
 
 const Home = () => {
   const [catBreeds, setCatBreeds] = useState<ISelectedBreed[]>([]);
+
+  const { alert, setAlert } = useContext(AlertContext) as AlertContextType;
 
   const { selectedBreed, setSelectedBreed, setSearch } = useContext(
     AppContext,
@@ -34,6 +38,12 @@ const Home = () => {
         setCatBreeds(res.data);
       } catch (e) {
         console.log({ e });
+        setAlert({
+          bodyMessage:
+            'Apologies but we could not load new cats for you at this time! Miau!',
+          show: true,
+          variant: 'warning',
+        });
       }
     };
 

@@ -5,6 +5,7 @@ import { ISelectedBreed } from 'src/@types/AppTypes';
 import { fetchSelectedCatImage } from 'src/apis/cats';
 import ImageCard from 'src/components/ImageCard/ImageCard';
 import Loading from 'src/components/Loading/Loading';
+import AlertContext from 'src/contexts/AlertContext';
 import AppContext from 'src/contexts/AppContext';
 import { StyledContainer } from 'src/styles';
 
@@ -22,6 +23,7 @@ const Details = () => {
     description: '',
   });
   const [isLoading, setIsLoading] = useState(false);
+  const { setAlert } = useContext(AlertContext);
   const { setSelectedBreed, selectedBreed } = useContext(AppContext);
   const navigate = useNavigate();
 
@@ -49,6 +51,12 @@ const Details = () => {
       } catch (e) {
         console.log({ e });
         setIsLoading(false);
+        setAlert({
+          bodyMessage:
+            'Apologies but we could not load new cats for you at this time! Miau!',
+          show: true,
+          variant: 'warning',
+        });
       }
     },
     [catId, setSelectedBreed],
