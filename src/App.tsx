@@ -1,20 +1,38 @@
 import './App.css';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import Home from './views/Home/Home';
-import Details from './views/Details/Details';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import AppProvider from './providers/AppProvider';
+import PathConstants from './routes/pathConstants';
+import { lazy } from 'react';
+import Layout from './components/Layout/Layout';
+
+const Home = lazy(() => import('./views/Home/Home'));
+const Details = lazy(() => import('./views/Details/Details'));
+
+const router = createBrowserRouter([
+  {
+    element: <Layout />,
+    children: [
+      {
+        path: PathConstants.HOME,
+        element: <Home />,
+      },
+      {
+        path: PathConstants.HOMEQUERY,
+        element: <Home />,
+      },
+      {
+        path: PathConstants.DETAILS,
+        element: <Details />,
+      },
+    ],
+  },
+]);
 
 function App() {
   return (
-    <BrowserRouter>
-      <AppProvider>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/:catId" element={<Details />} />
-          <Route path="/?breed=:breedId" element={<Home />} />
-        </Routes>
-      </AppProvider>
-    </BrowserRouter>
+    <AppProvider>
+      <RouterProvider router={router} />
+    </AppProvider>
   );
 }
 
