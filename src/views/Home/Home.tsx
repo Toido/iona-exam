@@ -1,11 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import {
-  Col,
-  Container,
-  FormGroup,
-  FormLabel,
-  FormSelect,
-} from 'react-bootstrap';
+import { Col, FormGroup, FormLabel, FormSelect } from 'react-bootstrap';
 import { AppContextType, ISelectedBreed } from 'src/@types/AppTypes';
 import { fetchCatBreeds } from 'src/apis/cats';
 import CatsList from 'src/views/Home/CatsList/CatsList';
