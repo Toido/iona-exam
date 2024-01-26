@@ -29,8 +29,12 @@ const Home = () => {
   useEffect(() => {
     // Fetch all cat breeds
     const fetchCats = async () => {
-      const res = await fetchCatBreeds();
-      setCatBreeds(res.data);
+      try {
+        const res = await fetchCatBreeds();
+        setCatBreeds(res.data);
+      } catch (e) {
+        console.log({ e });
+      }
     };
 
     fetchCats();
