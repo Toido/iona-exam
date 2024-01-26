@@ -1,4 +1,4 @@
-import { CardBody, CardHeader, CardImg } from 'react-bootstrap';
+import { Card, CardBody, CardHeader, CardImg } from 'react-bootstrap';
 import styled from 'styled-components';
 
 export const StyledCardHeader = styled(CardHeader)`
@@ -18,4 +18,8 @@ export const StyledCardBody = styled(CardBody)`
 
 export const StyledCardImage = styled(CardImg)`
   max-height: 100vh;
+`;
+
+export const StyledCard = styled(Card)`
+  margin-bottom: 20px;
 `;

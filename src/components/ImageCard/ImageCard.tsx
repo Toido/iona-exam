@@ -1,6 +1,10 @@
 import { FC, ReactNode } from 'react';
-import { Card } from 'react-bootstrap';
-import { StyledCardBody, StyledCardHeader, StyledCardImage } from './styles';
+import {
+  StyledCard,
+  StyledCardBody,
+  StyledCardHeader,
+  StyledCardImage,
+} from './styles';
 
 interface ImageCardProps {
   imageUrl: string;
@@ -10,11 +14,11 @@ interface ImageCardProps {
 
 const ImageCard: FC<ImageCardProps> = ({ imageUrl, body, header }) => {
   return (
-    <Card>
+    <StyledCard>
       {header ? <StyledCardHeader>{header}</StyledCardHeader> : null}
       <StyledCardImage src={imageUrl} />
       {body ? <StyledCardBody>{body}</StyledCardBody> : null}
-    </Card>
+    </StyledCard>
   );
 };
 
