@@ -7,7 +7,9 @@ import { StyledButton } from './styles';
 import CatsListContent from './component/CatsListContent';
 
 const CatsList = () => {
-  const { selectedBreed } = useContext(AppContext) as AppContextType;
+  const { selectedBreed, setSelectedBreed } = useContext(
+    AppContext,
+  ) as AppContextType;
   const [catList, setCatList] = useState<ICatDetails[]>([]);
   const [hasMoreRes, setHasMoreRes] = useState(false);
   const [uniqueIds, setUniqueIds] = useState<Set<string>>(new Set());
@@ -21,10 +23,13 @@ const CatsList = () => {
   }, [uniqueIds]);
 
   useEffect(() => {
+    if (breedParam) setSelectedBreed(breedParam);
+  }, [breedParam]);
+
+  useEffect(() => {
     // Fetch images of selected breed
     const fetchImages = async () => {
-      const breedId = breedParam ?? selectedBreed.id;
-      const res = await fetchCatImages(page, breedId);
+      const res = await fetchCatImages(page, selectedBreed);
 
       // Filter duplicate id
       const uniqueRes = res.data.filter((res: ICatDetails) => {
@@ -55,10 +60,10 @@ const CatsList = () => {
       }
     };
 
-    if (selectedBreed.id !== '' || breedParam !== '') {
+    if (selectedBreed !== '') {
       fetchImages();
     }
-  }, [page, selectedBreed, breedParam]);
+  }, [page, selectedBreed]);
 
   useEffect(() => {
     return () => {

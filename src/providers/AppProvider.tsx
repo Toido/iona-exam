@@ -3,13 +3,7 @@ import { ISearch, ISelectedBreed } from 'src/@types/AppTypes';
 import AppContext from 'src/contexts/AppContext';
 
 const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [selectedBreed, setSelectedBreed] = useState<ISelectedBreed>({
-    id: '',
-    name: '',
-    origin: '',
-    temperament: '',
-    description: '',
-  });
+  const [selectedBreed, setSelectedBreed] = useState<string>('');
 
   const [search, setSearch] = useState<ISearch>({
     id: '',

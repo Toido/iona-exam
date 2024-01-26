@@ -13,6 +13,13 @@ type DetailsParams = {
 
 const Details = () => {
   const [imageUrl, setImageUrl] = useState('');
+  const [catDetails, setCatDetails] = useState<ISelectedBreed>({
+    id: '',
+    name: '',
+    origin: '',
+    temperament: '',
+    description: '',
+  });
   const { setSelectedBreed, selectedBreed } = useContext(AppContext);
   const navigate = useNavigate();
 
@@ -31,7 +38,8 @@ const Details = () => {
           description: resData.breeds[0].description,
         };
         setImageUrl(resData.url);
-        setSelectedBreed(breedsBody);
+        setSelectedBreed(resData.breeds[0].id);
+        setCatDetails(breedsBody);
       } else {
         // display error message
       }
@@ -44,7 +52,7 @@ const Details = () => {
   }, [fetchCatDetails]);
 
   const handleBack = () => {
-    navigate(`/?breed=${selectedBreed.id}`);
+    navigate(`/?breed=${selectedBreed}`);
   };
 
   const renderHeader = () => {
@@ -54,10 +62,10 @@ const Details = () => {
   const renderBody = () => {
     return (
       <>
-        <CardTitle as="h4">{selectedBreed.name}</CardTitle>
-        <CardText as="h5">Origin: {selectedBreed.origin}</CardText>
-        <CardText as="h6">{selectedBreed.temperament}</CardText>
-        <CardText>{selectedBreed.description}</CardText>
+        <CardTitle as="h4">{catDetails.name}</CardTitle>
+        <CardText as="h5">Origin: {catDetails.origin}</CardText>
+        <CardText as="h6">{catDetails.temperament}</CardText>
+        <CardText>{catDetails.description}</CardText>
       </>
     );
   };

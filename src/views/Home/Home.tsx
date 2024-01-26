@@ -18,13 +18,7 @@ const Home = () => {
     const findBreed = catBreeds.find(cat => cat.id === event.target.value);
 
     if (findBreed) {
-      setSelectedBreed({
-        id: findBreed.id,
-        name: findBreed.name,
-        origin: findBreed.origin,
-        temperament: findBreed.temperament,
-        description: findBreed.description,
-      });
+      setSelectedBreed(findBreed.id);
       setSearch({
         page: 1,
         id: findBreed.id,
@@ -49,7 +43,7 @@ const Home = () => {
         <FormGroup>
           <FormLabel>Breed</FormLabel>
           <Col md={3} sm={6} xs={12}>
-            <FormSelect value={selectedBreed.id} onChange={handleSelectBreed}>
+            <FormSelect value={selectedBreed} onChange={handleSelectBreed}>
               <option key="placeholder" hidden value="">
                 Select breed
               </option>

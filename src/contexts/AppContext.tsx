@@ -2,13 +2,7 @@ import { createContext } from 'react';
 import { AppContextType } from 'src/@types/AppTypes';
 
 const AppContext = createContext<AppContextType>({
-  selectedBreed: {
-    id: '',
-    name: '',
-    origin: '',
-    temperament: '',
-    description: '',
-  },
+  selectedBreed: '',
   setSelectedBreed: () => {},
   search: {
     id: '',

@@ -20,8 +20,8 @@ export interface ICatDetails {
 }
 
 export type AppContextType = {
-  selectedBreed: ISelectedBreed;
-  setSelectedBreed: (breed: ISelectedBreed) => void;
+  selectedBreed: string;
+  setSelectedBreed: (breedId: string) => void;
   search: ISearch;
   setSearch: (search: ISearch) => void;
 };
