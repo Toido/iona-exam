@@ -1,4 +1,4 @@
-import { CardBody, CardHeader } from 'react-bootstrap';
+import { CardBody, CardHeader, CardImg } from 'react-bootstrap';
 import styled from 'styled-components';
 
 export const StyledCardHeader = styled(CardHeader)`
@@ -11,4 +11,11 @@ export const StyledCardHeader = styled(CardHeader)`
 export const StyledCardBody = styled(CardBody)`
   flex: 1 1 auto;
   padding: 1.25rem;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+`;
+
+export const StyledCardImage = styled(CardImg)`
+  max-height: 100vh;
 `;
