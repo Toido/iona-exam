@@ -11,7 +11,7 @@ export interface ISearch {
   page: number;
 }
 
-export interface ICatImages {
+export interface ICatDetails {
   breeds: ISelectedBreed;
   id: string;
   url: string;
