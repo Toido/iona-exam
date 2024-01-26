@@ -31,8 +31,6 @@ const CatsList = () => {
         return !uniqueIdRef.current.has(res.id);
       });
 
-      console.log({ catList, uniqueRes, uniqueIdRef });
-
       if (uniqueIdRef.current.size === 0) {
         setCatList(prevData => [...prevData, ...res.data]);
         setUniqueIds(
