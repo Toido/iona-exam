@@ -4,6 +4,8 @@ import AppProvider from './providers/AppProvider';
 import PathConstants from './routes/pathConstants';
 import { lazy } from 'react';
 import Layout from './components/Layout/Layout';
+import AlertProvider from './providers/AlertProvider';
+import AlertComponent from './components/Alert/Alert';
 
 const Home = lazy(() => import('./views/Home/Home'));
 const Details = lazy(() => import('./views/Details/Details'));
@@ -31,7 +33,10 @@ const router = createBrowserRouter([
 function App() {
   return (
     <AppProvider>
-      <RouterProvider router={router} />
+      <AlertProvider>
+        <AlertComponent />
+        <RouterProvider router={router} />
+      </AlertProvider>
     </AppProvider>
   );
 }
