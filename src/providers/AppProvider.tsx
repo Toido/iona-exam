@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { ISearch, ISelectedBreed } from 'src/@types/AppTypes';
+import { ISearch } from 'src/@types/AppTypes';
 import AppContext from 'src/contexts/AppContext';
 
 const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
