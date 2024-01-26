@@ -1,15 +1,21 @@
 import { useContext, useEffect, useRef, useState } from 'react';
-import { Button, Card, CardBody, CardImg, Col, Row } from 'react-bootstrap';
+import { Button, Col, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { ICatImages } from 'src/@types/AppTypes';
+import { AppContextType, ICatDetails } from 'src/@types/AppTypes';
 import { fetchCatImages } from 'src/apis/cats';
+import ImageCard from 'src/components/ImageCard/ImageCard';
 import AppContext from 'src/contexts/AppContext';
+import { StyledButton } from './styles';
 
-const CatsListContent = ({ catList }: { catList: ICatImages[] }) => {
+const CatsListContent = ({ catList }: { catList: ICatDetails[] }) => {
   const navigate = useNavigate();
 
   const handleViewDetail = (id: string) => {
     navigate(`/${id}`);
+  };
+
+  const renderButton = (id: string) => {
+    return <Button onClick={() => handleViewDetail(id)}>View Details</Button>;
   };
 
   return (
@@ -17,14 +23,7 @@ const CatsListContent = ({ catList }: { catList: ICatImages[] }) => {
       {catList.map((cat, index) => {
         return (
           <Col key={index} xs={12} sm={6} md={4} lg={3}>
-            <Card>
-              <CardImg variant="top" src={cat.url} />
-              <CardBody>
-                <Button onClick={() => handleViewDetail(cat.id)}>
-                  View Details
-                </Button>
-              </CardBody>
-            </Card>
+            <ImageCard imageUrl={cat.url} body={renderButton(cat.id)} />
           </Col>
         );
       })}
@@ -33,8 +32,10 @@ const CatsListContent = ({ catList }: { catList: ICatImages[] }) => {
 };
 
 const CatsList = () => {
-  const { selectedBreed, search, setSearch } = useContext(AppContext);
-  const [catList, setCatList] = useState<ICatImages[]>([]);
+  const { selectedBreed, search, setSearch } = useContext(
+    AppContext,
+  ) as AppContextType;
+  const [catList, setCatList] = useState<ICatDetails[]>([]);
   const [hasMoreRes, setHasMoreRes] = useState(false);
   const [uniqueIds, setUniqueIds] = useState<Set<string>>(new Set());
   const uniqueIdRef = useRef<Set<string>>(uniqueIds);
@@ -46,12 +47,10 @@ const CatsList = () => {
   useEffect(() => {
     // Fetch images of selected breed
     const fetchImages = async () => {
-      console.log('here');
-
       const res = await fetchCatImages(search.page, selectedBreed.id);
 
       // Filter duplicate id
-      const uniqueRes = res.data.filter((res: ICatImages) => {
+      const uniqueRes = res.data.filter((res: ICatDetails) => {
         return !uniqueIdRef.current.has(res.id);
       });
 
@@ -61,7 +60,7 @@ const CatsList = () => {
           prevIds =>
             new Set([
               ...prevIds,
-              ...res.data.map((item: ICatImages) => item.id),
+              ...res.data.map((item: ICatDetails) => item.id),
             ]),
         );
       } else if (uniqueRes.length > 0) {
@@ -70,11 +69,13 @@ const CatsList = () => {
           prevIds =>
             new Set([
               ...prevIds,
-              ...uniqueRes.map((item: ICatImages) => item.id),
+              ...uniqueRes.map((item: ICatDetails) => item.id),
             ]),
         );
       } else {
         // No new unique IDs, hide the load more button
+        console.log('no more');
+
         setHasMoreRes(false);
       }
     };
@@ -102,13 +103,14 @@ const CatsList = () => {
     }
 
     return (
-      <Button
+      <StyledButton
+        variant="success"
         onClick={() => {
           setSearch({ page: search.page + 1 });
         }}
       >
         Load more
-      </Button>
+      </StyledButton>
     );
   };
 
