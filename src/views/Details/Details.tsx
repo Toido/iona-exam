@@ -1,9 +1,11 @@
-import { useContext, useEffect, useState } from 'react';
-import { Button, CardText, CardTitle, Container } from 'react-bootstrap';
+import { useContext, useEffect, useMemo, useState } from 'react';
+import { Button, CardText, CardTitle } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
+import { ISelectedBreed } from 'src/@types/AppTypes';
 import { fetchSelectedCatImage } from 'src/apis/cats';
 import ImageCard from 'src/components/ImageCard/ImageCard';
 import AppContext from 'src/contexts/AppContext';
+import { StyledContainer } from 'src/styles';
 
 type DetailsParams = {
   catId: string;
@@ -16,12 +18,12 @@ const Details = () => {
 
   const { catId } = useParams<DetailsParams>();
 
-  useEffect(() => {
-    const fetchCatDetails = async () => {
+  const fetchCatDetails = useMemo(
+    () => async () => {
       if (catId) {
         const res = await fetchSelectedCatImage(catId);
         const resData = res.data;
-        const breedsBody = {
+        const breedsBody: ISelectedBreed = {
           id: resData.breeds[0].id,
           name: resData.breeds[0].name,
           origin: resData.breeds[0].origin,
@@ -33,10 +35,13 @@ const Details = () => {
       } else {
         // display error message
       }
-    };
+    },
+    [catId, setSelectedBreed],
+  );
 
+  useEffect(() => {
     fetchCatDetails();
-  }, [catId, setSelectedBreed]);
+  }, [fetchCatDetails]);
 
   const handleBack = () => {
     navigate(`/?breed=${selectedBreed.id}`);
@@ -58,13 +63,13 @@ const Details = () => {
   };
 
   return (
-    <Container>
+    <StyledContainer>
       <ImageCard
         imageUrl={imageUrl}
         header={renderHeader()}
         body={renderBody()}
       />
-    </Container>
+    </StyledContainer>
   );
 };
 
