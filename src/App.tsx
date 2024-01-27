@@ -9,6 +9,7 @@ import AlertComponent from './components/Alert/Alert';
 
 const Home = lazy(() => import('./views/Home/Home'));
 const Details = lazy(() => import('./views/Details/Details'));
+const NotFound = lazy(() => import('./views/NotFound/NotFound'));
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,7 @@ const router = createBrowserRouter([
         element: <Details />,
       },
     ],
+    errorElement: <NotFound />,
   },
 ]);
 
