@@ -114,6 +114,7 @@ const CatsList = () => {
         onClick={() => {
           setPage(page + 1);
         }}
+        disabled={selectedBreed === ''}
       >
         Load more
       </StyledButton>
