@@ -12,23 +12,45 @@ const api = axios.create({
 });
 
 export const fetchCatBreeds = async () => {
-  const res = await api.get('/breeds');
+  const res = await api
+    .get('/breeds')
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => {
+      console.log({ error });
+    });
   return res;
 };
 
 export const searchCatBreed = async (breedId: string) => {
-  const res = await api.get(`/breeds/${breedId}`);
+  const res = await api
+    .get(`/breeds/${breedId}`)
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => console.log({ error }));
   return res;
 };
 
 export const fetchCatImages = async (page: number, breedId: string) => {
-  const res = await api.get(
-    `/images/search?page=${page}&limit=10&breed_id=${breedId}&include_breeds=false`,
-  );
+  const res = await api
+    .get(
+      `/images/search?page=${page}&limit=10&breed_id=${breedId}&include_breeds=false`,
+    )
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => console.log({ error }));
   return res;
 };
 
 export const fetchSelectedCatImage = async (imageId: string) => {
-  const res = await api.get(`/images/${imageId}`);
+  const res = await api
+    .get(`/images/${imageId}`)
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => console.log({ error }));
   return res;
 };

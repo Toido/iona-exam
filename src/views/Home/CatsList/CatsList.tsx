@@ -41,18 +41,15 @@ const CatsList = (props: ICatsListProps) => {
         const res = await fetchCatImages(page, selectedBreed);
 
         // Filter duplicate id
-        const uniqueRes = res.data.filter((res: ICatDetails) => {
+        const uniqueRes = res.filter((res: ICatDetails) => {
           return !uniqueIdRef.current.has(res.id);
         });
 
         if (uniqueIdRef.current.size === 0) {
-          setCatList(prevData => [...prevData, ...res.data]);
+          setCatList(prevData => [...prevData, ...res]);
           setUniqueIds(
             prevIds =>
-              new Set([
-                ...prevIds,
-                ...res.data.map((item: ICatDetails) => item.id),
-              ]),
+              new Set([...prevIds, ...res.map((item: ICatDetails) => item.id)]),
           );
         } else if (uniqueRes.length > 0) {
           setCatList(prevData => [...prevData, ...uniqueRes]);
