@@ -8,6 +8,7 @@ import Loading from 'src/components/Loading/Loading';
 import AlertContext from 'src/contexts/AlertContext';
 import AppContext from 'src/contexts/AppContext';
 import { StyledContainer } from 'src/styles';
+import { StyledMessage } from './styles';
 
 type DetailsParams = {
   catId: string;
@@ -23,6 +24,7 @@ const Details = () => {
     description: '',
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [showNoCats, setShowNoCats] = useState(false);
   const { setAlert } = useContext(AlertContext);
   const { setSelectedBreed, selectedBreed } = useContext(AppContext);
   const navigate = useNavigate();
@@ -34,6 +36,7 @@ const Details = () => {
       try {
         if (catId) {
           setIsLoading(true);
+          setShowNoCats(false);
           const res = await fetchSelectedCatImage(catId);
           const resData = res.data;
           const breedsBody: ISelectedBreed = {
@@ -51,6 +54,7 @@ const Details = () => {
       } catch (e) {
         console.log({ e });
         setIsLoading(false);
+        setShowNoCats(true);
         setAlert({
           bodyMessage:
             'Apologies but we could not load new cats for you at this time! Miau!',
@@ -59,7 +63,7 @@ const Details = () => {
         });
       }
     },
-    [catId, setSelectedBreed],
+    [catId, setSelectedBreed, setAlert],
   );
 
   useEffect(() => {
@@ -89,6 +93,15 @@ const Details = () => {
     return (
       <StyledContainer>
         <Loading text="Loading..." />
+      </StyledContainer>
+    );
+  }
+
+  if (showNoCats) {
+    return (
+      <StyledContainer>
+        {renderHeader()}
+        <StyledMessage>Sorry, no cats were fetched...</StyledMessage>
       </StyledContainer>
     );
   }
