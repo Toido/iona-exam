@@ -10,7 +10,15 @@ import AlertContext from 'src/contexts/AlertContext';
 import { AlertContextType } from 'src/@types/AlertTypes';
 
 const Home = () => {
-  const [catBreeds, setCatBreeds] = useState<ISelectedBreed[]>([]);
+  const [catBreeds, setCatBreeds] = useState<ISelectedBreed[]>([
+    {
+      id: 'Select breed',
+      name: 'Select breed',
+      temperament: '',
+      description: '',
+      origin: '',
+    },
+  ]);
 
   const { setAlert } = useContext(AlertContext) as AlertContextType;
 
@@ -35,7 +43,8 @@ const Home = () => {
     const fetchCats = async () => {
       try {
         const res = await fetchCatBreeds();
-        setCatBreeds(res.data);
+
+        setCatBreeds(prevData => [...prevData, ...res]);
       } catch (e) {
         console.log({ e });
         setAlert({

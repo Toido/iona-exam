@@ -116,7 +116,7 @@ const CatsList = (props: ICatsListProps) => {
         onClick={() => {
           setPage(page + 1);
         }}
-        disabled={selectedBreed === ''}
+        disabled={selectedBreed === 'Select breed' || selectedBreed === ''}
       >
         Load more
       </StyledButton>
