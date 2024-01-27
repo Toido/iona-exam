@@ -1,24 +1,33 @@
-import { useContext } from 'react';
-import { Alert } from 'react-bootstrap';
+import { useCallback, useContext, useEffect } from 'react';
 import { AlertContextType } from 'src/@types/AlertTypes';
 import AlertContext from 'src/contexts/AlertContext';
+import { StyledAlert, StyledText } from './styles';
 
 const AlertComponent = () => {
   const { alert, setAlert } = useContext(AlertContext) as AlertContextType;
+  const delay = 5000; // time to show alert
 
-  const handleCloseAlert = () => {
+  const handleCloseAlert = useCallback(() => {
     setAlert({ show: false, bodyMessage: '', variant: '' });
-  };
+  }, [setAlert]);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      handleCloseAlert();
+    }, delay);
+
+    return () => clearTimeout(timer);
+  }, [delay, handleCloseAlert]);
 
   return (
-    <Alert
+    <StyledAlert
       show={alert.show}
       variant={alert.variant}
       onClose={() => handleCloseAlert()}
       dismissible
     >
-      {alert.bodyMessage}
-    </Alert>
+      <StyledText>{alert.bodyMessage}</StyledText>
+    </StyledAlert>
   );
 };
 
