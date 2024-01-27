@@ -1,18 +1,20 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { AppContextType, ICatDetails } from 'src/@types/AppTypes';
+import { ICatDetails } from 'src/@types/AppTypes';
 import { fetchCatImages } from 'src/apis/cats';
-import AppContext from 'src/contexts/AppContext';
 import { StyledButton } from './styles';
 import CatsListContent from './component/CatsListContent';
 import Loading from 'src/components/Loading/Loading';
-import AlertContext from 'src/contexts/AlertContext';
+import { IAlertContext } from 'src/@types/AlertTypes';
 
-const CatsList = () => {
-  const { setAlert } = useContext(AlertContext);
-  const { selectedBreed, setSelectedBreed } = useContext(
-    AppContext,
-  ) as AppContextType;
+interface ICatsListProps {
+  setAlert: (alert: IAlertContext) => void;
+  selectedBreed: string;
+  setSelectedBreed: (breedId: string) => void;
+}
+
+const CatsList = (props: ICatsListProps) => {
+  const { setAlert, selectedBreed, setSelectedBreed } = props;
   const [catList, setCatList] = useState<ICatDetails[]>([]);
   const [hasMoreRes, setHasMoreRes] = useState(false);
   const [uniqueIds, setUniqueIds] = useState<Set<string>>(new Set());
@@ -29,7 +31,7 @@ const CatsList = () => {
 
   useEffect(() => {
     if (breedParam) setSelectedBreed(breedParam);
-  }, [breedParam]);
+  }, [breedParam, setSelectedBreed]);
 
   useEffect(() => {
     // Fetch images of selected breed
@@ -81,7 +83,7 @@ const CatsList = () => {
     if (selectedBreed !== '') {
       fetchImages();
     }
-  }, [page, selectedBreed]);
+  }, [page, selectedBreed, setAlert]);
 
   useEffect(() => {
     return () => {

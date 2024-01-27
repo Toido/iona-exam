@@ -12,7 +12,7 @@ import { AlertContextType } from 'src/@types/AlertTypes';
 const Home = () => {
   const [catBreeds, setCatBreeds] = useState<ISelectedBreed[]>([]);
 
-  const { alert, setAlert } = useContext(AlertContext) as AlertContextType;
+  const { setAlert } = useContext(AlertContext) as AlertContextType;
 
   const { selectedBreed, setSelectedBreed, setSearch } = useContext(
     AppContext,
@@ -48,7 +48,7 @@ const Home = () => {
     };
 
     fetchCats();
-  }, []);
+  }, [setAlert]);
 
   return (
     <StyledContainer>
@@ -71,7 +71,11 @@ const Home = () => {
         </FormGroup>
       </StyledRow>
 
-      <CatsList />
+      <CatsList
+        selectedBreed={selectedBreed}
+        setSelectedBreed={setSelectedBreed}
+        setAlert={setAlert}
+      />
     </StyledContainer>
   );
 };
