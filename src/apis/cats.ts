@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-const apiUrl = import.meta.env.VITE_APP_API_URL;
-const apiKey = import.meta.env.VITE_API_KEY;
+const apiUrl = process.env.VITE_APP_API_URL;
+const apiKey = process.env.VITE_API_KEY;
 
 const api = axios.create({
   baseURL: apiUrl,
@@ -20,16 +20,6 @@ export const fetchCatBreeds = async () => {
     .catch(error => {
       console.log({ error });
     });
-  return res;
-};
-
-export const searchCatBreed = async (breedId: string) => {
-  const res = await api
-    .get(`/breeds/${breedId}`)
-    .then(response => {
-      return response.data;
-    })
-    .catch(error => console.log({ error }));
   return res;
 };
 
