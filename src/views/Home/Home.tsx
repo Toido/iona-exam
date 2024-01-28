@@ -67,9 +67,6 @@ const Home = () => {
           <FormLabel>Breed</FormLabel>
           <Col md={3} sm={6} xs={12}>
             <FormSelect value={selectedBreed} onChange={handleSelectBreed}>
-              <option key="placeholder" hidden value="">
-                Select breed
-              </option>
               {catBreeds.map((breed, index) => (
                 <option key={index} value={breed.id}>
                   {breed.name}
