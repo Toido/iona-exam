@@ -1,10 +1,8 @@
 import { useState } from 'react';
-import { IAlertContext } from 'src/@types/AlertTypes';
+import { IAlertContext } from 'src/types/AlertTypes';
 import AlertContext from 'src/contexts/AlertContext';
 
-const AlertProvider: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+const AlertProvider = ({ children }: { children: React.ReactNode }) => {
   const [alert, setAlert] = useState<IAlertContext>({
     bodyMessage: '',
     show: false,

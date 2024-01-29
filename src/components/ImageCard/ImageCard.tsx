@@ -1,4 +1,4 @@
-import { FC, ReactNode } from 'react';
+import { ReactNode } from 'react';
 import {
   StyledCard,
   StyledCardBody,
@@ -12,7 +12,7 @@ interface ImageCardProps {
   header?: ReactNode;
 }
 
-const ImageCard: FC<ImageCardProps> = ({ imageUrl, body, header }) => {
+const ImageCard = ({ imageUrl, body, header }: ImageCardProps) => {
   return (
     <StyledCard>
       {header ? <StyledCardHeader>{header}</StyledCardHeader> : null}
