@@ -74,7 +74,11 @@ const Details = () => {
   };
 
   const renderHeader = () => {
-    return <Button onClick={() => handleBack()}>Back</Button>;
+    return (
+      <Button data-testid="back-btn" onClick={() => handleBack()}>
+        Back
+      </Button>
+    );
   };
 
   const renderBody = () => {
@@ -106,7 +110,7 @@ const Details = () => {
   }
 
   return (
-    <StyledContainer>
+    <StyledContainer data-testid="cat-details">
       <ImageCard
         imageUrl={imageUrl}
         header={renderHeader()}
