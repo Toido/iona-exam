@@ -12,7 +12,11 @@ const CatsListContent = ({ catList }: { catList: ICatDetails[] }) => {
   };
 
   const renderButton = (id: string) => {
-    return <Button onClick={() => handleViewDetail(id)}>View Details</Button>;
+    return (
+      <Button onClick={() => handleViewDetail(id)} data-testid="details-btn">
+        View Details
+      </Button>
+    );
   };
 
   if (catList.length === 0) {
@@ -24,7 +28,7 @@ const CatsListContent = ({ catList }: { catList: ICatDetails[] }) => {
   }
 
   return (
-    <Row>
+    <Row data-testid="catslist-row">
       {catList.map((cat, index) => {
         return (
           <Col key={index} xs={12} sm={6} md={4} lg={3}>
