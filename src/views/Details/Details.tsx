@@ -38,15 +38,16 @@ const Details = () => {
           setIsLoading(true);
           setShowNoCats(false);
           const res = await fetchSelectedCatImage(catId);
+          const { id, name, origin, temperament, description } = res.breeds[0];
           const breedsBody: ISelectedBreed = {
-            id: res.breeds[0].id,
-            name: res.breeds[0].name,
-            origin: res.breeds[0].origin,
-            temperament: res.breeds[0].temperament,
-            description: res.breeds[0].description,
+            id,
+            name,
+            origin,
+            temperament,
+            description,
           };
           setImageUrl(res.url);
-          setSelectedBreed(res.breeds[0].id);
+          setSelectedBreed(id);
           setCatDetails(breedsBody);
           setIsLoading(false);
         }
