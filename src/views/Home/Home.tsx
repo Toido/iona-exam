@@ -45,8 +45,7 @@ const Home = () => {
         const res = await fetchCatBreeds();
 
         setCatBreeds(prevData => [...prevData, ...res]);
-      } catch (e) {
-        console.log({ e });
+      } catch (_) {
         setAlert({
           bodyMessage:
             'Apologies but we could not load new cats for you at this time! Miau!',

@@ -62,8 +62,7 @@ const CatsList = (props: ICatsListProps) => {
           setHasMoreRes(false);
         }
         setIsLoading(false);
-      } catch (e) {
-        console.log({ e });
+      } catch (_) {
         setIsLoading(false);
         setAlert({
           bodyMessage:

@@ -50,8 +50,7 @@ const Details = () => {
           setCatDetails(breedsBody);
           setIsLoading(false);
         }
-      } catch (e) {
-        console.log({ e });
+      } catch (_) {
         setIsLoading(false);
         setShowNoCats(true);
         setAlert({
