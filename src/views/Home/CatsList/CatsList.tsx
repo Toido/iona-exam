@@ -114,6 +114,7 @@ const CatsList = (props: ICatsListProps) => {
           setPage(page + 1);
         }}
         disabled={selectedBreed === 'Select breed' || selectedBreed === ''}
+        data-testid="catslist-btn"
       >
         Load more
       </StyledButton>
@@ -121,10 +122,10 @@ const CatsList = (props: ICatsListProps) => {
   };
 
   return (
-    <>
+    <div data-testid="catslist">
       <CatsListContent catList={catList} />
       {renderLoadMore()}
-    </>
+    </div>
   );
 };
 
