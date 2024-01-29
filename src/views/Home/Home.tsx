@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from 'react';
-import { AppContextType, ISelectedBreed } from 'src/@types/AppTypes';
+import { AppContextType, ISelectedBreed } from 'src/types/AppTypes';
 import { fetchCatBreeds } from 'src/apis/cats';
 import CatsList from 'src/views/Home/CatsList/CatsList';
 import AppContext from 'src/contexts/AppContext';
 import { StyledRow } from './styles';
 import { StyledContainer } from 'src/styles';
 import AlertContext from 'src/contexts/AlertContext';
-import { AlertContextType } from 'src/@types/AlertTypes';
+import { AlertContextType } from 'src/types/AlertTypes';
 import Dropdown from 'src/components/Dropdown/Dropdown';
 
 const Home = () => {

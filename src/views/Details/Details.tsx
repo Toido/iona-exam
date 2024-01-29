@@ -1,7 +1,7 @@
 import { useContext, useEffect, useMemo, useState } from 'react';
 import { Button, CardText, CardTitle } from 'react-bootstrap';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ISelectedBreed } from 'src/@types/AppTypes';
+import { ISelectedBreed } from 'src/types/AppTypes';
 import { fetchSelectedCatImage } from 'src/apis/cats';
 import ImageCard from 'src/components/ImageCard/ImageCard';
 import Loading from 'src/components/Loading/Loading';

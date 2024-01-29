@@ -1,5 +1,5 @@
 import { Col, FormGroup, FormLabel, FormSelect } from 'react-bootstrap';
-import { ISelectedBreed } from 'src/@types/AppTypes';
+import { ISelectedBreed } from 'src/types/AppTypes';
 
 interface DropdownProps {
   value: string;

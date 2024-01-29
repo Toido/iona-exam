@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { ICatDetails } from 'src/@types/AppTypes';
+import { ICatDetails } from 'src/types/AppTypes';
 import { fetchCatImages } from 'src/apis/cats';
 import { StyledButton } from './styles';
 import CatsListContent from './component/CatsListContent';
 import Loading from 'src/components/Loading/Loading';
-import { IAlertContext } from 'src/@types/AlertTypes';
+import { IAlertContext } from 'src/types/AlertTypes';
 
 interface ICatsListProps {
   setAlert: (alert: IAlertContext) => void;
@@ -34,13 +34,11 @@ const CatsList = (props: ICatsListProps) => {
   }, [breedParam, setSelectedBreed]);
 
   useEffect(() => {
-    // Fetch images of selected breed
     const fetchImages = async () => {
       try {
         setIsLoading(true);
         const res = await fetchCatImages(page, selectedBreed);
 
-        // Filter duplicate id
         const uniqueRes = res.filter((res: ICatDetails) => {
           return !uniqueIdRef.current.has(res.id);
         });
@@ -61,7 +59,6 @@ const CatsList = (props: ICatsListProps) => {
               ]),
           );
         } else {
-          // No new unique IDs, hide the load more button
           setHasMoreRes(false);
         }
         setIsLoading(false);
@@ -77,17 +74,19 @@ const CatsList = (props: ICatsListProps) => {
       }
     };
 
-    if (selectedBreed !== '') {
+    if (selectedBreed) {
       fetchImages();
     }
   }, [page, selectedBreed, setAlert]);
 
   useEffect(() => {
-    return () => {
+    const clearStates = () => {
       setCatList([]);
       setUniqueIds(new Set());
       setHasMoreRes(false);
     };
+
+    clearStates();
   }, [selectedBreed, breedParam]);
 
   useEffect(() => {

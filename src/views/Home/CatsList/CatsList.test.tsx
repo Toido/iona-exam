@@ -6,7 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import axios from 'axios';
 import AppContext from 'src/contexts/AppContext';
 import { fetchCatImages } from 'src/apis/cats';
-import { ISelectedBreed } from 'src/@types/AppTypes';
+import { ISelectedBreed } from 'src/types/AppTypes';
 
 // Mock axios
 jest.mock('axios');

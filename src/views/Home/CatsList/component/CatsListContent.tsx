@@ -1,6 +1,6 @@
 import { Button, Col, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { ICatDetails } from 'src/@types/AppTypes';
+import { ICatDetails } from 'src/types/AppTypes';
 import ImageCard from 'src/components/ImageCard/ImageCard';
 import { StyledCol } from '../styles';
 

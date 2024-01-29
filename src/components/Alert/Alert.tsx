@@ -1,7 +1,7 @@
 import { useCallback, useContext, useEffect } from 'react';
-import { AlertContextType } from 'src/@types/AlertTypes';
 import AlertContext from 'src/contexts/AlertContext';
 import { StyledAlert, StyledText } from './styles';
+import { AlertContextType } from 'src/types/AlertTypes';
 
 const AlertComponent = () => {
   const { alert, setAlert } = useContext(AlertContext) as AlertContextType;
