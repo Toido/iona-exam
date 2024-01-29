@@ -1,5 +1,4 @@
 import { useContext, useEffect, useState } from 'react';
-import { Col, FormGroup, FormLabel, FormSelect } from 'react-bootstrap';
 import { AppContextType, ISelectedBreed } from 'src/@types/AppTypes';
 import { fetchCatBreeds } from 'src/apis/cats';
 import CatsList from 'src/views/Home/CatsList/CatsList';
@@ -8,6 +7,7 @@ import { StyledRow } from './styles';
 import { StyledContainer } from 'src/styles';
 import AlertContext from 'src/contexts/AlertContext';
 import { AlertContextType } from 'src/@types/AlertTypes';
+import Dropdown from 'src/components/Dropdown/Dropdown';
 
 const Home = () => {
   const [catBreeds, setCatBreeds] = useState<ISelectedBreed[]>([
@@ -63,18 +63,11 @@ const Home = () => {
     <StyledContainer>
       <h1>Cat Browser</h1>
       <StyledRow>
-        <FormGroup>
-          <FormLabel>Breed</FormLabel>
-          <Col md={3} sm={6} xs={12}>
-            <FormSelect value={selectedBreed} onChange={handleSelectBreed}>
-              {catBreeds.map((breed, index) => (
-                <option key={index} value={breed.id}>
-                  {breed.name}
-                </option>
-              ))}
-            </FormSelect>
-          </Col>
-        </FormGroup>
+        <Dropdown
+          value={selectedBreed}
+          onChange={handleSelectBreed}
+          options={catBreeds}
+        />
       </StyledRow>
 
       <CatsList
