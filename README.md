@@ -42,6 +42,10 @@ This project is a simple application that fetches a list of cat breeds and displ
 
 1. `npm run test` to run unit tests
 
+### Lint
+
+1. `npm run lint` to run lint
+
 ### Build
 
 1. `npm run build` to build the application for production
