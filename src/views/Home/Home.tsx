@@ -39,7 +39,6 @@ const Home = () => {
   };
 
   useEffect(() => {
-    // Fetch all cat breeds
     const fetchCats = async () => {
       try {
         const res = await fetchCatBreeds();
