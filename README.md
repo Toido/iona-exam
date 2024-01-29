@@ -1,30 +1,42 @@
-# React + TypeScript + Vite
+# Cat browser application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a simple application that fetches a list of cat breeds and displays a set amount of sample images based on the selected breed. It is also able to display the details of a selected cat from the list.
 
-Currently, two official plugins are available:
+## Project structure
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- src - Application source code
+  - view - Higher-level components or page components that represent different views or pages of the application
+  - components - JSX elements that are reusable and application-specific
+  - apis - Structures that contain fetch logic
+  - types - Shared TypeScript types
+  - contexts - Store context
+  - providers - Custom context provider
+  - routes - Contants used for route navigation
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Cat list:** Displays a list of cat based on specific breed selected from dropdown.
+- **Cat details:** Displays the detail of a selected cat from the list.
 
-- Configure the top-level `parserOptions` property like this:
+## Requirements
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+- Node.js (v14.0.0 or higher)
+- npm
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+## Usage
+
+1. Clone this repo
+2. `npm install` to install dependencies
+
+### Develop
+
+1. `npm run dev` to run a local development server and view in the browser
+2. Open your browser and visit http://localhost:5173 to view the application
+
+### Test
+
+1. `npm run test` to run unit tests
+
+### Build
+
+1. `npm run build` to build the application for production
