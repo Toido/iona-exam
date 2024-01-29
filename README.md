@@ -28,6 +28,11 @@ This project is a simple application that fetches a list of cat breeds and displ
 1. Clone this repo
 2. `npm install` to install dependencies
 
+## Copy env
+
+1. `cp .env.example .env` to copy env file
+2. Add .env values
+
 ### Develop
 
 1. `npm run dev` to run a local development server and view in the browser
